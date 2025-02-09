@@ -1,4 +1,4 @@
-# Tab Organizer Community Forum
+# Tab Organizer
 
 Hello Tab Organizer Community!
 
