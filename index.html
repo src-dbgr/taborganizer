@@ -1,168 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Effortlessly organize your Chrome tabs with Tab Organizer. Smart grouping, session management, and more for maximum productivity.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Effortlessly organize your Chrome tabs with Tab Organizer. Smart grouping, session management, and more for maximum productivity."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/tab-organizer-logo.png" type="image/png" />
     <title>Tab Organizer - Chrome Extension for Smart Tab Management</title>
 
     <style>
-        /* Basic Reset & Dark Theme Foundation */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Common UI fonts */
-            background-color: #1e1e1e; /* Dark background, similar to screenshot */
-            color: #e0e0e0; /* Light grey text */
-            line-height: 1.6;
-        }
+      :root {
+        /* --- UPDATED COLORS - Closer to Extension UI --- */
+        /* Solid Dark Backgrounds */
+        --bg-body: #202124; /* Dark grey, common Google dark theme */
+        --bg-section: #303134; /* Slightly lighter grey for sections */
+        /* Text Colors (mostly unchanged) */
+        --text-primary: #e8eaed;
+        --text-secondary: #bdc1c6;
+        --text-headings: #ffffff;
+        /* Border Color */
+        --border-color-subtle: #404144; /* Adjusted grey for borders */
+        /* Blue Accent (kept from previous step) */
+        --accent-blue-start: #5e8fde;
+        --accent-blue-end: #8ab4f8;
+        --accent-blue-solid: #8ab4f8;
+        --accent-glow: rgba(94, 143, 222, 0.5);
+        /* Green Accent for Checkmarks */
+        --accent-green: #1e8e3e; /* Google Material Green */
+      }
 
-        /* Centered Content Area */
-        .container {
-            max-width: 800px; /* Limit content width */
-            margin: 0 auto; /* Center the container */
-            padding: 20px;
-        }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-body); /* Use solid body background */
+        color: var(--text-primary);
+        line-height: 1.7;
+        min-height: 100vh;
+      }
 
-        /* Header Styling */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 1px solid #333; /* Subtle separator */
-        }
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 25px;
+      }
 
-        header h1 {
-            color: #ffffff; /* White heading */
-            margin-bottom: 0.5em;
-        }
+      header {
+        padding: 50px 20px;
+        border-bottom: 1px solid var(--border-color-subtle); /* Use new border color */
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+      header img {
+        width: 45px;
+        height: auto;
+        display: inline-block;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        vertical-align: middle;
+      }
+      header h1 {
+        color: var(--text-headings);
+        margin: 0;
+        font-size: 2.4em;
+        font-weight: 700;
+      }
+      header p {
+        font-size: 1.15em;
+        color: var(--text-secondary);
+        text-align: center;
+        width: 100%;
+        margin-top: 15px;
+      }
 
-        header p {
-            font-size: 1.1em;
-            color: #b0b0b0; /* Slightly dimmer paragraph text */
-        }
+      main {
+        padding: 30px 0;
+      }
 
-        /* Main Content Sections */
-        main {
-            padding: 30px 0;
-        }
+      /* --- UPDATED Section Style --- */
+      section {
+        margin-bottom: 45px;
+        padding: 30px;
+        background-color: var(--bg-section); /* Use solid section background */
+        border-radius: 12px;
+        /* Optional: Keep subtle border or remove it */
+        border: 1px solid rgba(255, 255, 255, 0.08); /* Even more subtle border */
+        /* backdrop-filter removed */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow slightly */
+      }
 
-        section {
-            margin-bottom: 40px;
-            padding: 20px;
-            background-color: #2a2a2a; /* Slightly lighter background for sections */
-            border-radius: 8px; /* Rounded corners like UI elements */
-        }
+      section h2 {
+        color: var(--text-headings);
+        margin-top: 0;
+        border-bottom: 1px solid var(--border-color-subtle); /* Use new border color */
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+      }
 
-        section h2 {
-            color: #ffffff; /* White section headings */
-            margin-top: 0;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+      /* Feature List Styling - GREEN Checkmarks */
+      #features ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      #features li {
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        padding-left: 30px;
+        position: relative;
+      }
+      #features li::before {
+        content: "✔";
+        color: var(--accent-green); /* === USE GREEN === */
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 1.2em;
+      }
 
-        /* Feature List Styling */
-        #features ul {
-            list-style: none; /* Remove default bullets */
-            padding-left: 0;
-        }
+      /* Image Gallery Grid Styling */
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+      }
+      .grid-item {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.05
+        ); /* Use subtle light overlay instead of solid bg? */
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Adjusted border */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease,
+          transform 0.3s ease;
+      }
+      .grid-item:hover {
+        border-color: var(--accent-blue-solid); /* Keep blue accent on hover */
+        box-shadow: 0 0 12px var(--accent-glow);
+        transform: translateY(-3px);
+      }
+      .thumbnail {
+        display: block;
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+      .thumbnail:hover {
+        opacity: 0.9;
+      }
 
-        #features li {
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
+      /* Lightbox Styling */
+      #lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+      }
+      #lightbox.visible {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+      }
+      #lightbox-img {
+        display: block;
+        max-width: 1000px;
+        width: auto;
+        height: auto;
+        max-height: 90vh;
+        margin: auto;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
+        cursor: default;
+      }
+      .close-button {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 35px;
+        color: #bbb;
+        cursor: pointer;
+        z-index: 1001;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+      .close-button:hover {
+        transform: scale(1.1);
+        color: #fff;
+      }
 
-        /* Image Styling */
-        img {
-            max-width: 100%; /* Responsive image */
-            height: auto;
-            display: block; /* Center image if container is centered */
-            margin: 20px auto; /* Add space around image */
-            border-radius: 8px; /* Rounded corners */
-            border: 1px solid #444; /* Subtle border */
-        }
+      /* CTA Button Styling (Blue Gradient Kept) */
+      .cta-button {
+        display: inline-block;
+        background: linear-gradient(
+          45deg,
+          var(--accent-blue-start),
+          var(--accent-blue-end)
+        );
+        color: #ffffff;
+        padding: 15px 35px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .cta-button:hover {
+        background: linear-gradient(
+          45deg,
+          var(--accent-blue-end),
+          var(--accent-blue-start)
+        );
+        box-shadow: 0 6px 15px var(--accent-glow);
+        transform: translateY(-2px);
+      }
+      #cta {
+        text-align: center;
+      }
+      #cta h2 {
+        margin-bottom: 15px;
+      }
+      #cta p {
+        margin-bottom: 25px;
+        font-size: 1.1em;
+        color: var(--text-secondary);
+      }
 
-        /* Call-to-Action Button Styling */
-        .cta-button {
-            display: inline-block;
-            background-color: #4285F4; /* Google blue - adjust if needed */
-            color: #ffffff; /* White text on button */
-            padding: 12px 25px;
-            border-radius: 5px; /* Slightly rounded corners */
-            text-decoration: none; /* Remove underline */
-            font-weight: bold;
-            text-align: center;
-            transition: background-color 0.3s ease; /* Smooth hover effect */
-            border: none; /* Remove default border */
-            cursor: pointer;
-        }
+      /* Privacy Section (Accent Kept Blue) */
+      #privacy h2 {
+        color: var(--text-headings);
+      }
+      #privacy p {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: var(--accent-blue-solid);
+      }
 
-        .cta-button:hover {
-            background-color: #5a95f5; /* Lighter blue on hover */
-        }
-
-        #cta {
-             text-align: center; /* Center button and text */
-        }
-
-
-        /* Privacy Section */
-        #privacy h2 {
-             color: #8ab4f8; /* Use accent color for privacy heading maybe? */
-        }
-        #privacy p {
-             font-weight: bold;
-        }
-
-
-        /* Footer Styling */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            border-top: 1px solid #333; /* Subtle separator */
-            color: #888; /* Dimmer text for footer */
-            font-size: 0.9em;
-        }
-
+      /* Footer Styling */
+      footer {
+        text-align: center;
+        padding: 30px 20px;
+        margin-top: 50px;
+        border-top: 1px solid var(--border-color-subtle); /* Use new border color */
+        color: #9aa0a6;
+        font-size: 0.95em;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Tab Organizer 🚀</h1>
-            <p>Your ultimate solution to tab chaos in the Chrome Browser!</p>
-        </header>
+      <header>
+        <img src="assets/tab-organizer-logo.png" alt="Tab Organizer Logo" />
+        <h1>Tab Organizer 🚀</h1>
+        <p>Your ultimate solution to tab chaos in the Chrome Browser!</p>
+      </header>
 
-        <main>
-            <section id="features">
-                <h2>✨ Key Features</h2>
-                <ul>
-                    <li>✅ Smart Tab Grouping</li>
-                    <li>✅ Powerful Session Management</li>
-                    <li>✅ Intelligent Cleanup Suggestions</li>
-                    <li>✅ Effortless Multi-Window Control</li>
-                    <li>✅ Dynamic Live Tab Counter</li>
-                    <li>✅ Localized in 19 Languages</li>
-                    <li>✅ Privacy-Focused – Zero Data Collection!</li>
-                </ul>
-                <img src="tab-organizer-logo.png" alt="Tab Organizer Extension Interface" width="600">
-            </section>
+      <main>
+        <section id="features">
+          <h2>✨ Key Features</h2>
+          <ul>
+            <li>Smart Tab Grouping</li>
+            <li>Powerful Session Management</li>
+            <li>Intelligent Cleanup Suggestions</li>
+            <li>Effortless Multi-Window Control</li>
+            <li>Dynamic Live Tab Counter</li>
+            <li>Localized in 19 Languages</li>
+            <li>Privacy-Focused – Zero Data Collection!</li>
+          </ul>
+        </section>
 
-            <section id="cta">
-                <h2>Tired of Tab Chaos?</h2>
-                <p>Install Tab Organizer for free from the Chrome Web Store today!</p>
-                <a href="https://chromewebstore.google.com/detail/tab-organizer/mlgdgflookmmhlddkokaheadldccngja" target="_blank" class="cta-button">Install Now</a>
-            </section>
+        <section id="gallery">
+          <h2>🖼️ Screenshots</h2>
+          <div class="image-grid">
+            <div class="grid-item">
+              <img
+                src="assets/to-extension.png"
+                alt="Tab Organizer extension main interface"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-active-sync.png"
+                alt="Tab Organizer active sync status indicator"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-duplicates.png"
+                alt="Tab Organizer duplicate tab identification"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-main-buttons.png"
+                alt="Tab Organizer main action buttons panel"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-move-to-window.png"
+                alt="Tab Organizer move selected tabs to new window option"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-load-session.png"
+                alt="Tab Organizer load saved session selection"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-save-session.png"
+                alt="Tab Organizer save current session dialog"
+                class="thumbnail"
+              />
+            </div>
+            <div class="grid-item">
+              <img
+                src="assets/to-stats.png"
+                alt="Tab Organizer tab usage statistics view"
+                class="thumbnail"
+              />
+            </div>
+          </div>
+        </section>
+        <section id="cta">
+          <h2>Tired of Tab Chaos?</h2>
+          <p>Install Tab Organizer for free from the Chrome Web Store today!</p>
+          <a
+            href="https://chromewebstore.google.com/detail/tab-organizer/mlgdgflookmmhlddkokaheadldccngja"
+            target="_blank"
+            class="cta-button"
+            >Install Now</a
+          >
+        </section>
 
-             <section id="privacy">
-                <h2>🔒 Privacy</h2>
-                <p>Privacy-Focused – Zero Data Collection!</p>
-            </section>
-        </main>
+        <section id="privacy">
+          <h2>🔒 Privacy</h2>
+          <p>Privacy-Focused – Zero Data Collection!</p>
+        </section>
+      </main>
 
-        <footer>
-            <p>&copy; 2025 src-dbgr. All rights reserved.</p>
-            </footer>
-    </div> </body>
+      <footer>
+        <p>© 2025 src-dbgr. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <div id="lightbox">
+      <span class="close-button">&times;</span>
+      <img id="lightbox-img" src="" alt="Enlarged View" />
+    </div>
+    <script>
+      // Javascript remains the same
+      document.addEventListener("DOMContentLoaded", () => {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const closeButton = document.querySelector(".close-button");
+        const thumbnails = document.querySelectorAll(".thumbnail");
+        function openLightbox(event) {
+          const imgSrc = event.target.src;
+          lightboxImg.src = imgSrc;
+          lightbox.classList.add("visible");
+          document.body.style.overflow = "hidden";
+        }
+        function closeLightbox() {
+          lightbox.classList.remove("visible");
+          lightboxImg.src = "";
+          document.body.style.overflow = "auto";
+        }
+        thumbnails.forEach((thumbnail) => {
+          thumbnail.addEventListener("click", openLightbox);
+        });
+        closeButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          closeLightbox();
+        });
+        lightbox.addEventListener("click", (event) => {
+          if (event.target === lightbox) {
+            closeLightbox();
+          }
+        });
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            lightbox.classList.contains("visible")
+          ) {
+            closeLightbox();
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
