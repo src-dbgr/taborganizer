@@ -195,10 +195,10 @@
       }
       #lightbox-img {
         display: block;
-        max-width: 1000px;
+        max-width: 90%; /* Sicherstellen, dass das Bild nicht breiter als der Bildschirm ist */
+        max-height: 90%; /* Sicherstellen, dass das Bild nicht höher als der Bildschirm ist */
         width: auto;
         height: auto;
-        max-height: 90vh;
         margin: auto;
         box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
         cursor: default;
@@ -216,6 +216,20 @@
       .close-button:hover {
         transform: scale(1.1);
         color: #fff;
+      }
+      #lightbox::before {
+        content: "Tippe, um zu schliessen";
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #eee;
+        font-size: 0.9em;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      #lightbox.visible::before {
+        opacity: 0.7;
       }
 
       /* CTA Button Styling (Blue Gradient Kept) */
