@@ -195,13 +195,14 @@
       }
       #lightbox-img {
         display: block;
-        max-width: 90%; /* Sicherstellen, dass das Bild nicht breiter als der Bildschirm ist */
-        max-height: 90%; /* Sicherstellen, dass das Bild nicht höher als der Bildschirm ist */
+        max-width: 95vw; /* Verwende viewport-relative Einheiten */
+        max-height: 95vh; /* Verwende viewport-relative Einheiten */
         width: auto;
         height: auto;
         margin: auto;
         box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
-        cursor: default;
+        /* Wichtig für das Zoomen! */
+        pointer-events: auto;
       }
       .close-button {
         position: absolute;
@@ -404,35 +405,42 @@
       <img id="lightbox-img" src="" alt="Enlarged View" />
     </div>
     <script>
-      // Javascript remains the same
       document.addEventListener("DOMContentLoaded", () => {
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
         const closeButton = document.querySelector(".close-button");
         const thumbnails = document.querySelectorAll(".thumbnail");
+
         function openLightbox(event) {
           const imgSrc = event.target.src;
           lightboxImg.src = imgSrc;
+          // Zurücksetzen der Skalierung, falls vorher gezoomt wurde
+          lightboxImg.style.transform = 'scale(1)';
           lightbox.classList.add("visible");
           document.body.style.overflow = "hidden";
         }
+
         function closeLightbox() {
           lightbox.classList.remove("visible");
           lightboxImg.src = "";
           document.body.style.overflow = "auto";
         }
+
         thumbnails.forEach((thumbnail) => {
           thumbnail.addEventListener("click", openLightbox);
         });
+
         closeButton.addEventListener("click", (event) => {
           event.stopPropagation();
           closeLightbox();
         });
+
         lightbox.addEventListener("click", (event) => {
           if (event.target === lightbox) {
             closeLightbox();
           }
         });
+
         document.addEventListener("keydown", (event) => {
           if (
             event.key === "Escape" &&
