@@ -18,213 +18,496 @@
 
     <style>
       :root {
-        /* Modern gradient backgrounds - enhanced with inspiration from Scrovex */
-        --gradient-main: linear-gradient(135deg, #1a1a24 0%, #272734 100%);
-        --gradient-section: linear-gradient(135deg, #26262f 0%, #2f2f3d 100%);
-        --gradient-card: linear-gradient(135deg, #2d2d3d 0%, #343446 100%);
-        --gradient-highlight: linear-gradient(135deg, #3a3a4c 0%, #45455a 100%);
+        /* Modern color palette */
+        --bg-dark: #0e0e12;
+        --bg-surface: #15151b;
+        --bg-surface-hover: #1c1c25;
+        --bg-card: #1e1e28;
+        --bg-card-hover: #232330;
 
-        /* Text Colors */
-        --text-primary: #e8eaed;
-        --text-secondary: #bdc1c6;
-        --text-headings: #ffffff;
-
-        /* Border Colors */
-        --border-color-subtle: rgba(255, 255, 255, 0.08);
-        --border-glow: rgba(138, 180, 248, 0.25);
-
-        /* Accent Colors - expanded color palette inspired by Scrovex */
-        --accent-blue-start: #5171d5;
-        --accent-blue-mid: #5e8fde;
-        --accent-blue-end: #8ab4f8;
+        /* Accent colors */
+        --accent-blue: #5e8fde;
+        --accent-blue-light: #8ab4f8;
         --accent-purple: #a58efa;
-        --accent-purple-dark: #7a5ce0;
-        --accent-purple-light: #c6b6ff;
+        --accent-green: #34a853;
         --accent-teal: #60cccb;
-        --accent-pink: #e879f9;
-        --accent-glow: rgba(94, 143, 222, 0.5);
-        --accent-green: #34a853; /* Google Material Green */
 
-        /* 3D Effects */
-        --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
-        --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.2);
-        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.25);
-        --shadow-xl: 0 15px 35px rgba(0, 0, 0, 0.3);
+        /* Text colors */
+        --text-primary: #ffffff;
+        --text-secondary: #b0b7c3;
+        --text-tertiary: #8a8f98;
+
+        /* Elevations */
+        --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.25);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.4);
+
+        /* Borders */
+        --border-subtle: rgba(255, 255, 255, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        margin: 0;
-        padding: 0;
         font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, Helvetica, Arial, sans-serif;
-        background: var(--gradient-main);
+          Roboto, sans-serif;
+        background-color: var(--bg-dark);
         color: var(--text-primary);
-        line-height: 1.7;
-        min-height: 100vh;
-        position: relative;
+        line-height: 1.6;
         overflow-x: hidden;
       }
 
-      /* Background decorative elements */
-      body::before,
-      body::after {
-        content: "";
+      /* Decorative background elements */
+      .bg-glow {
         position: fixed;
-        width: 60%;
-        height: 60%;
-        border-radius: 50%;
         pointer-events: none;
         z-index: -1;
       }
 
-      body::before {
+      .bg-glow-1 {
         top: -20%;
-        right: -20%;
+        right: -10%;
+        width: 60vw;
+        height: 60vw;
         background: radial-gradient(
           circle,
-          rgba(94, 143, 222, 0.1) 0%,
+          rgba(94, 143, 222, 0.12) 0%,
           rgba(94, 143, 222, 0) 70%
         );
-        filter: blur(30px);
+        filter: blur(60px);
       }
 
-      body::after {
+      .bg-glow-2 {
         bottom: -30%;
-        left: -30%;
+        left: -10%;
+        width: 70vw;
+        height: 70vw;
         background: radial-gradient(
           circle,
-          rgba(165, 142, 250, 0.1) 0%,
+          rgba(165, 142, 250, 0.12) 0%,
           rgba(165, 142, 250, 0) 70%
         );
-        filter: blur(30px);
+        filter: blur(70px);
+      }
+
+      .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 30px 30px;
+        pointer-events: none;
+        z-index: -1;
       }
 
       .container {
-        max-width: 900px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 25px 20px;
+        padding: 0 1.5rem;
       }
 
-      /* Responsive header styling */
+      /* Floating header with glassmorphism effect */
+      .header-wrapper {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        background: rgba(14, 14, 18, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
       header {
-        padding: 40px 20px;
-        border-bottom: 1px solid var(--border-color-subtle);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 15px;
-        margin-bottom: 30px;
-        position: relative;
+        padding: 1.5rem 0;
       }
 
       .header-title {
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-wrap: nowrap;
-        gap: 8px;
-        white-space: nowrap;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
       }
 
       header img {
-        width: 45px;
+        width: 48px;
         height: auto;
-        display: inline-block;
-        margin: 0;
-        border: none;
-        border-radius: 0;
-        vertical-align: middle;
-        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
       }
 
       header h1 {
-        color: var(--text-headings);
-        margin: 0;
-        font-size: 2.2em;
+        font-size: 2.5rem;
         font-weight: 700;
-        letter-spacing: -0.01em;
+        background: linear-gradient(
+          to right,
+          var(--text-primary),
+          var(--accent-blue-light)
+        );
+        -webkit-background-clip: text;
         background-clip: text;
-        text-shadow: 0 2px 10px rgba(138, 180, 248, 0.3);
-        position: relative;
+        color: transparent;
+        text-shadow: 0 2px 10px rgba(138, 180, 248, 0.2);
       }
 
       header p {
-        font-size: 1.15em;
+        font-size: 1.2rem;
         color: var(--text-secondary);
         text-align: center;
-        width: 100%;
-        margin-top: 15px;
+        max-width: 600px;
       }
 
-      main {
-        padding: 30px 0;
-      }
-
-      /* Enhanced section styling */
-      section {
-        margin-bottom: 45px;
-        padding: 30px;
-        background: var(--gradient-section);
-        border-radius: 16px;
-        border: 1px solid var(--border-color-subtle);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      section:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-      }
-
-      section h2 {
-        color: var(--text-headings);
-        margin-top: 0;
-        border-bottom: 1px solid var(--border-color-subtle);
-        padding-bottom: 15px;
-        margin-bottom: 25px;
-        font-size: 1.8em;
-        font-weight: 600;
-        background-clip: text;
+      /* Hero section with floating UI mockup - FIXED */
+      .hero {
         position: relative;
-        display: inline-block;
+        margin: 4rem 0 8rem; /* Increased bottom margin to prevent overlap */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 600px; /* Ensure enough space */
       }
 
-      section h2::after {
+      .hero-content {
+        text-align: center;
+        max-width: 800px;
+        margin-bottom: 2rem;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          to right,
+          var(--text-primary) 0%,
+          var(--accent-blue-light) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-ui {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 40px; /* Extra space at bottom */
+        padding-bottom: 60px; /* Additional padding to prevent overlap */
+        overflow: visible;
+      }
+
+      .hero-ui-main {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: auto;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-xl);
+        z-index: 2;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .hero-ui-main:hover {
+        transform: translateX(-50%) translateY(-5px);
+      }
+
+      .hero-ui-floating {
+        position: absolute;
+        width: 40%;
+        height: auto;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow-lg);
+        opacity: 0.5;
+        z-index: 1;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .hero-ui-left {
+        left: 5%;
+        top: 20%;
+        transform: rotate(-5deg);
+      }
+
+      .hero-ui-left:hover {
+        transform: rotate(-3deg) translateY(-5px);
+      }
+
+      .hero-ui-right {
+        right: 5%;
+        top: 25%;
+        transform: rotate(5deg);
+      }
+
+      .hero-ui-right:hover {
+        transform: rotate(3deg) translateY(-5px);
+      }
+
+      /* Modified activation for hero images - blur instead of opacity */
+      .hero-ui-floating.active,
+      .hero-ui-main.active {
+        z-index: 10; /* Bring to front */
+        box-shadow: var(--shadow-xl); /* Enhanced shadow */
+        transition: all 0.2s ease;
+        filter: blur(0); /* No blur for active image */
+        opacity: 1 !important;
+      }
+
+      .hero-ui-floating.inactive,
+      .hero-ui-main.inactive {
+        z-index: 1;
+        filter: blur(3px); /* Blur instead of opacity */
+        opacity: 1; /* Keep full visibility */
+        transition: all 0.2s ease;
+      }
+
+      /* Features section with card hover effects */
+      .features {
+        padding: 3rem 0 5rem;
+        margin-top: 2rem; /* Additional spacing from hero section */
+      }
+
+      .section-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .section-title span {
+        background: linear-gradient(
+          to right,
+          var(--accent-blue),
+          var(--accent-purple)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .feature-card .feature-title {
+        font-size: 1.4rem;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1rem;
+      }
+
+      .feature-card .feature-desc {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      .feature-card {
+        position: relative;
+        padding: 2rem;
+        background: var(--bg-card);
+        border-radius: 1rem;
+        border: 1px solid var(--border-subtle);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg), 0 0 20px rgba(94, 143, 222, 0.2);
+        border-color: rgba(94, 143, 222, 0.3);
+        background: var(--bg-card-hover);
+      }
+
+      .feature-card::before {
         content: "";
         position: absolute;
-        bottom: -1px;
+        top: 0;
         left: 0;
-        width: 60px;
-        height: 3px;
-        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.05) 0%,
+          transparent 100%
+        );
+        pointer-events: none;
       }
 
-      /* Enhanced Feature List Styling */
-      /* Feature cards styled like a modern app UI with 3D effect inspired by Simplelist */
-      #features ul {
-        list-style: none;
-        padding-left: 0;
+      .feature-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+
+      .feature-card:hover::after {
+        opacity: 1;
+      }
+
+      .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue) 0%,
+          var(--accent-purple) 100%
+        );
+        box-shadow: 0 5px 15px rgba(94, 143, 222, 0.3);
+      }
+
+      .feature-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+      }
+
+      .feature-desc {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-top: auto;
+      }
+
+      /* Screenshots gallery with parallax effect */
+      .screenshots {
+        padding: 3rem 0 6rem;
+        position: relative;
+      }
+
+      .screenshots-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3.5rem;
         perspective: 1000px;
       }
 
-      #features li {
-        margin-bottom: 5px;
-        font-size: 1.1em;
-        padding: 16px 15px 16px 40px;
+      .screenshot-card {
         position: relative;
-        background: var(--gradient-card);
-        border-radius: 10px;
-        border: 1px solid var(--border-color-subtle);
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-sm);
+        border-radius: 12px;
         overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transform-style: preserve-3d;
+        transition: all 0.4s ease;
       }
 
-      #features li::after {
+      .screenshot-card:hover {
+        transform: translateZ(20px) rotateX(5deg);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .screenshot-img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        transform: scale(1);
+        transition: transform 0.5s ease;
+        display: block;
+      }
+
+      .screenshot-card:hover .screenshot-img {
+        transform: scale(1.05);
+      }
+
+      .screenshot-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0) 60%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: flex-end;
+        padding: 1.5rem;
+      }
+
+      .screenshot-card:hover .screenshot-overlay {
+        opacity: 1;
+      }
+
+      .screenshot-title {
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      /* CTA section with floating motion */
+      .cta {
+        margin: 3rem 0 6rem;
+        position: relative;
+      }
+
+      .cta-card {
+        background: var(--bg-surface);
+        border-radius: 24px;
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-subtle);
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .cta-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -239,169 +522,87 @@
         pointer-events: none;
       }
 
-      #features li:hover {
-        transform: translateY(-3px) scale(1.02) rotateX(2deg);
-        box-shadow: var(--shadow-md), 0 0 15px rgba(138, 180, 248, 0.2);
-        border-color: var(--border-glow);
+      .cta-content {
+        position: relative;
         z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
       }
 
-      #features li::before {
-        content: "✔";
-        color: var(--accent-green);
-        font-weight: bold;
-        position: absolute;
-        left: 14px;
-        top: 16px;
-        font-size: 1.1em;
-        z-index: 2;
-        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+      .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          to right,
+          var(--text-primary),
+          var(--accent-blue-light)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
-      /* Enhanced Image Gallery Grid Styling */
-      .image-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 20px;
+      .cta-text {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
       }
 
-      .grid-item {
-        background: var(--gradient-card);
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid var(--border-color-subtle);
-        transition: transform 0.3s ease, box-shadow 0.3s ease,
-          border-color 0.3s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      .floating {
+        animation: floating 5s ease-in-out infinite;
       }
 
-      .grid-item:hover {
-        border-color: var(--accent-blue-mid);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 15px var(--accent-glow);
-        transform: translateY(-5px) scale(1.02);
+      @keyframes floating {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
       }
 
-      .thumbnail {
-        display: block;
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .thumbnail:hover {
-        opacity: 0.9;
-        transform: scale(1.05);
-      }
-
-      /* Lightbox Styling - enhanced with modern blur effect */
-      #lightbox {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(10, 10, 15, 0.85);
-        display: flex;
+      /* Button styling */
+      .btn {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        z-index: 1000;
-        padding: 20px;
-        box-sizing: border-box;
-        cursor: pointer;
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s linear 0.3s, opacity 0.3s ease;
-        backdrop-filter: blur(8px);
-      }
-
-      #lightbox.visible {
-        visibility: visible;
-        opacity: 1;
-        transition-delay: 0s;
-      }
-
-      #lightbox-img {
-        display: block;
-        max-width: 95vw;
-        max-height: 95vh;
-        width: auto;
-        height: auto;
-        margin: auto;
-        box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
-        border-radius: 5px;
-        pointer-events: auto;
-        transform: scale(0.95);
-        transition: transform 0.3s ease;
-      }
-
-      #lightbox.visible #lightbox-img {
-        transform: scale(1);
-      }
-
-      .close-button {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        font-size: 35px;
-        color: #bbb;
-        cursor: pointer;
-        z-index: 1001;
-        transition: transform 0.2s ease, color 0.2s ease;
-      }
-
-      .close-button:hover {
-        transform: scale(1.1);
-        color: #fff;
-      }
-
-      #lightbox::before {
-        content: "Tap to close";
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #eee;
-        font-size: 0.9em;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-
-      #lightbox.visible::before {
-        opacity: 0.7;
-      }
-
-      /* Enhanced CTA Button Styling */
-      .cta-button {
-        display: inline-block;
-        background: linear-gradient(
-          45deg,
-          var(--accent-blue-start),
-          var(--accent-blue-end)
-        );
-        color: #ffffff;
-        padding: 15px 40px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
         border-radius: 12px;
         text-decoration: none;
-        font-weight: 600;
-        font-size: 1.1em;
-        text-align: center;
         transition: all 0.3s ease;
-        border: none;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(94, 143, 222, 0.4);
         position: relative;
         overflow: hidden;
       }
 
-      .cta-button::before {
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue) 0%,
+          var(--accent-purple) 100%
+        );
+        color: white;
+        box-shadow: 0 5px 15px rgba(94, 143, 222, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(94, 143, 222, 0.6);
+      }
+
+      .btn-primary::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: -100%;
         width: 100%;
         height: 100%;
+        top: 0;
+        left: -100%;
         background: linear-gradient(
           90deg,
           transparent,
@@ -411,310 +612,584 @@
         transition: left 0.7s ease;
       }
 
-      .cta-button:hover {
-        background: linear-gradient(
-          45deg,
-          var(--accent-blue-mid),
-          var(--accent-purple)
-        );
-        box-shadow: 0 6px 20px var(--accent-glow);
-        transform: translateY(-3px);
-      }
-
-      .cta-button:hover::before {
+      .btn-primary:hover::after {
         left: 100%;
       }
 
-      #cta {
+      .btn-large {
+        padding: 1rem 3rem;
+        font-size: 1.1rem;
+        border-radius: 16px;
+      }
+
+      /* Privacy badge with glow effect */
+      .privacy {
+        padding: 3rem 0;
         text-align: center;
       }
 
-      #cta h2 {
-        margin-bottom: 15px;
-      }
-
-      #cta p {
-        margin-bottom: 25px;
-        font-size: 1.1em;
-        color: var(--text-secondary);
-      }
-
-      /* Enhanced Privacy Section - centered layout */
-      #privacy h2 {
-        color: var(--text-headings);
-        text-align: center;
-      }
-
-      .privacy-content {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
-
-      #privacy p {
-        font-weight: bold;
-        font-size: 1.1em;
+      .privacy-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--bg-surface);
+        border: 1px solid rgba(52, 168, 83, 0.3);
         color: var(--accent-green);
-        display: inline-block;
-        background: rgba(30, 142, 62, 0.1);
-        padding: 14px 24px;
-        border-radius: 10px;
-        border: 1px solid rgba(30, 142, 62, 0.2);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1),
-          0 0 0 1px rgba(52, 168, 83, 0.1) inset;
+        font-weight: 600;
+        padding: 1rem 2rem;
+        border-radius: 100px;
+        margin-top: 2rem;
+        box-shadow: 0 5px 15px rgba(52, 168, 83, 0.15),
+          0 0 30px rgba(52, 168, 83, 0.1);
         transition: all 0.3s ease;
-        text-align: center;
       }
 
-      #privacy p:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15),
-          0 0 0 1px rgba(52, 168, 83, 0.2) inset;
-        background: rgba(30, 142, 62, 0.15);
+      .privacy-badge:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(52, 168, 83, 0.25),
+          0 0 40px rgba(52, 168, 83, 0.15);
+        background: rgba(52, 168, 83, 0.05);
       }
 
-      /* Footer Styling */
+      .privacy-icon {
+        font-size: 1.3rem;
+      }
+
+      /* Footer styling */
       footer {
+        padding: 4rem 0 2rem;
         text-align: center;
-        padding: 30px 20px;
-        margin-top: 50px;
-        border-top: 1px solid var(--border-color-subtle);
-        color: #9aa0a6;
-        font-size: 0.95em;
-        position: relative;
-        overflow: hidden;
+        color: var(--text-tertiary);
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border-subtle);
+        margin-top: 2rem;
       }
 
-      /* Responsive media queries */
+      /* Lightbox styling */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .lightbox.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .lightbox-img {
+        max-width: 95%;
+        max-height: 95%;
+        border-radius: 10px;
+        box-shadow: var(--shadow-xl);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        object-fit: contain;
+      }
+
+      .lightbox.visible .lightbox-img {
+        transform: scale(1);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 2.5rem;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgba(0, 0, 0, 0.5);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2001;
+      }
+
+      .lightbox-close:hover {
+        transform: scale(1.1) rotate(90deg);
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .lightbox-caption {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 1.2rem;
+        padding: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 3rem;
+        }
+
+        .hero {
+          margin-bottom: 7rem; /* Adjusted spacing for tablets */
+        }
+
+        .section-title {
+          font-size: 1.8rem;
+        }
+      }
+
       @media (max-width: 768px) {
-        header {
-          padding: 30px 15px;
+        .hero-title {
+          font-size: 2.5rem;
         }
 
-        .header-title {
-          flex-wrap: nowrap;
+        .hero-subtitle {
+          font-size: 1.2rem;
         }
 
-        header h1 {
-          font-size: 1.8em;
+        .hero {
+          margin-bottom: 6rem; /* Adjusted for mobile */
+          min-height: 500px;
         }
 
-        header img {
-          width: 38px;
+        .hero-ui-floating {
+          display: none; /* Hide side images on mobile */
         }
 
-        section {
-          padding: 25px 20px;
+        .hero-ui-main {
+          width: 85%; /* Wider main image on mobile */
+          margin-bottom: 40px; /* Extra space for main image */
         }
 
-        section h2 {
-          font-size: 1.6em;
-        }
-
-        #features ul {
-          grid-template-columns: 1fr;
+        .cta-title {
+          font-size: 2rem;
         }
       }
 
       @media (max-width: 480px) {
-        .container {
-          padding: 15px 10px;
-        }
-
-        header {
-          padding: 25px 10px;
-        }
-
-        .header-title {
-          flex-wrap: nowrap;
-        }
-
         header h1 {
-          font-size: 1.5em;
-        }
-
-        header img {
-          width: 32px;
+          font-size: 2rem;
         }
 
         header p {
-          font-size: 1em;
+          font-size: 1rem;
         }
 
-        section {
-          padding: 20px 15px;
-          margin-bottom: 30px;
+        .hero-title {
+          font-size: 2rem;
         }
 
-        section h2 {
-          font-size: 1.4em;
-          padding-bottom: 10px;
-          margin-bottom: 20px;
+        .hero-subtitle {
+          font-size: 1rem;
         }
 
-        .cta-button {
-          padding: 12px 30px;
-          font-size: 1em;
+        .hero {
+          margin-bottom: 5rem; /* Minimal spacing on small mobile */
+          min-height: 350px;
+        }
+
+        .section-title {
+          font-size: 1.5rem;
+        }
+
+        .btn-large {
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+        }
+
+        .cta-title {
+          font-size: 1.8rem;
+        }
+
+        .cta-text {
+          font-size: 1rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <header>
-        <div class="header-title">
-          <img src="assets/tab-organizer-logo.png" alt="Tab Organizer Logo" />
-          <h1>Tab Organizer 🚀</h1>
-        </div>
-        <p>Your ultimate solution to tab chaos in the Chrome Browser!</p>
-      </header>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-grid"></div>
 
-      <main>
-        <section id="features">
-          <h2>✨ Key Features</h2>
-          <ul>
-            <li>Smart Tab Grouping</li>
-            <li>Powerful Session Management</li>
-            <li>Intelligent Cleanup Suggestions</li>
-            <li>Effortless Multi-Window Control</li>
-            <li>Dynamic Live Tab Counter</li>
-            <li>Localized in 19 Languages</li>
-          </ul>
-        </section>
-
-        <section id="gallery">
-          <h2>🖼️ Screenshots</h2>
-          <div class="image-grid">
-            <div class="grid-item">
-              <img
-                src="assets/to-extension.png"
-                alt="Tab Organizer extension main interface"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-active-sync.png"
-                alt="Tab Organizer active sync status indicator"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-duplicates.png"
-                alt="Tab Organizer duplicate tab identification"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-main-buttons.png"
-                alt="Tab Organizer main action buttons panel"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-move-to-window.png"
-                alt="Tab Organizer move selected tabs to new window option"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-load-session.png"
-                alt="Tab Organizer load saved session selection"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-save-session.png"
-                alt="Tab Organizer save current session dialog"
-                class="thumbnail"
-              />
-            </div>
-            <div class="grid-item">
-              <img
-                src="assets/to-stats.png"
-                alt="Tab Organizer tab usage statistics view"
-                class="thumbnail"
-              />
-            </div>
+    <div class="header-wrapper">
+      <div class="container">
+        <header>
+          <div class="header-title">
+            <img src="assets/tab-organizer-logo.png" alt="Tab Organizer Logo" />
+            <h1>Tab Organizer</h1>
           </div>
-        </section>
-        <section id="cta">
-          <h2>Tired of Tab Chaos?</h2>
-          <p>Install Tab Organizer for free from the Chrome Web Store today!</p>
+          <p>Your ultimate solution to tab chaos in the Chrome Browser!</p>
+        </header>
+      </div>
+    </div>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-content">
+          <h2 class="hero-title">Bring Order to Your Browser Chaos</h2>
+          <p class="hero-subtitle">
+            Smart organization tools that make tab management effortless
+          </p>
           <a
             href="https://chromewebstore.google.com/detail/tab-organizer/mlgdgflookmmhlddkokaheadldccngja"
             target="_blank"
-            class="cta-button"
-            >Install Now</a
+            class="btn btn-primary btn-large floating"
           >
-        </section>
+            Install Now
+          </a>
+        </div>
 
-        <section id="privacy">
-          <h2>🔒 Privacy</h2>
-          <div class="privacy-content">
-            <p>Privacy-Focused – Zero Data Collection!</p>
+        <div class="hero-ui">
+          <img
+            src="assets/to-main-views.png"
+            alt="Tab Organizer main interface"
+            class="hero-ui-main"
+          />
+          <img
+            src="assets/to-duplicates.png"
+            alt="Tab Organizer duplicate detection"
+            class="hero-ui-floating hero-ui-left"
+          />
+          <img
+            src="assets/to-save-session.png"
+            alt="Tab Organizer save session feature"
+            class="hero-ui-floating hero-ui-right"
+          />
+        </div>
+      </section>
+
+      <section class="features" id="features">
+        <h2 class="section-title">✨ <span>Key Features</span></h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Smart Tab Grouping</h3>
+            <p class="feature-desc">
+              Automatically organize related tabs into color-coded groups for
+              better visual organization and reduced clutter.
+            </p>
           </div>
-        </section>
-      </main>
 
-      <footer>
-        <p>© 2025 src-dbgr. All rights reserved.</p>
-      </footer>
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Powerful Session Management</h3>
+            <p class="feature-desc">
+              Save and restore tab sessions with a single click, perfect for
+              switching between different projects or workflows.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Intelligent Cleanup Suggestions</h3>
+            <p class="feature-desc">
+              Get smart recommendations to close duplicate or inactive tabs,
+              helping you maintain a clean browser environment.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Effortless Multi-Window Control</h3>
+            <p class="feature-desc">
+              Easily manage tabs across multiple windows with intuitive
+              drag-and-drop functionality and window previews.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Dynamic Live Tab Counter</h3>
+            <p class="feature-desc">
+              Keep track of your open tabs with a real-time counter, helping you
+              stay aware of browser resource usage.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3 class="feature-title">Localized in 19 Languages</h3>
+            <p class="feature-desc">
+              Enjoy a seamless experience in your preferred language with
+              comprehensive localization support.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="screenshots">
+        <h2 class="section-title">🖼️ <span>Screenshots</span></h2>
+        <div class="screenshots-grid">
+          <div class="screenshot-card">
+            <img
+              src="assets/to-extension.png"
+              alt="Tab Organizer extension main interface"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Main Extension Interface</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-active-sync.png"
+              alt="Tab Organizer active sync status indicator"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Active Sync Status</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-duplicates.png"
+              alt="Tab Organizer duplicate tab identification"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Duplicate Tab Detection</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-main-buttons.png"
+              alt="Tab Organizer main action buttons panel"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Main Action Buttons</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-move-to-window.png"
+              alt="Tab Organizer move selected tabs to new window option"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Move to New Window</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-load-session.png"
+              alt="Tab Organizer load saved session selection"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Load Saved Sessions</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-save-session.png"
+              alt="Tab Organizer save current session dialog"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Save Current Session</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <img
+              src="assets/to-stats.png"
+              alt="Tab Organizer tab usage statistics view"
+              class="screenshot-img"
+            />
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Tab Usage Statistics</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2 class="cta-title">Tired of Tab Chaos?</h2>
+            <p class="cta-text">
+              Install Tab Organizer for free from the Chrome Web Store today and
+              take control of your browser!
+            </p>
+            <a
+              href="https://chromewebstore.google.com/detail/tab-organizer/mlgdgflookmmhlddkokaheadldccngja"
+              target="_blank"
+              class="btn btn-primary btn-large"
+            >
+              Install Now
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="privacy">
+        <h2 class="section-title">🔒 <span>Privacy</span></h2>
+        <div class="privacy-badge">
+          <span class="privacy-icon">✓</span>
+          <span>Privacy-Focused – Zero Data Collection!</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      <p>© 2025 src-dbgr. All rights reserved.</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-close" id="lightbox-close">&times;</div>
+      <img src="" alt="Enlarged view" class="lightbox-img" id="lightbox-img" />
     </div>
 
-    <div id="lightbox">
-      <span class="close-button">&times;</span>
-      <img id="lightbox-img" src="" alt="Enlarged View" />
-    </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Hero UI image interaction - simplified
+        const heroImages = document.querySelectorAll(
+          ".hero-ui-main, .hero-ui-floating"
+        );
+
+        heroImages.forEach((img) => {
+          img.addEventListener("click", () => {
+            // Simple toggle active state
+            heroImages.forEach((i) => {
+              if (i === img) {
+                i.classList.add("active");
+                i.classList.remove("inactive");
+              } else {
+                i.classList.add("inactive");
+                i.classList.remove("active");
+              }
+            });
+          });
+        });
+
+        // Click outside to reset hero images
+        document.addEventListener("click", (e) => {
+          if (
+            !e.target.closest(".hero-ui-main") &&
+            !e.target.closest(".hero-ui-floating")
+          ) {
+            if (
+              document.querySelector(".hero-ui-main.active") ||
+              document.querySelector(".hero-ui-floating.active")
+            ) {
+              heroImages.forEach((i) => {
+                i.classList.remove("active");
+                i.classList.remove("inactive");
+              });
+            }
+          }
+        });
+
+        // Enhanced Lightbox functionality for screenshots
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
-        const closeButton = document.querySelector(".close-button");
-        const thumbnails = document.querySelectorAll(".thumbnail");
+        const lightboxClose = document.getElementById("lightbox-close");
+        const screenshotCards = document.querySelectorAll(".screenshot-card");
 
-        function openLightbox(event) {
-          const imgSrc = event.target.src;
-          lightboxImg.src = imgSrc;
-          // Reset scaling if zoomed previously
-          lightboxImg.style.transform = "scale(1)";
+        // Add caption element to lightbox
+        const lightboxCaption = document.createElement("div");
+        lightboxCaption.className = "lightbox-caption";
+        lightbox.appendChild(lightboxCaption);
+
+        function openLightbox(e) {
+          const card = e.currentTarget;
+          const img = card.querySelector(".screenshot-img");
+          const title =
+            card.querySelector(".screenshot-title")?.textContent || "";
+
+          lightboxImg.src = img.src;
+          lightboxCaption.textContent = title;
           lightbox.classList.add("visible");
           document.body.style.overflow = "hidden";
         }
 
         function closeLightbox() {
           lightbox.classList.remove("visible");
-          lightboxImg.src = "";
+          setTimeout(() => {
+            lightboxImg.src = "";
+            lightboxCaption.textContent = "";
+          }, 300);
           document.body.style.overflow = "auto";
         }
 
-        thumbnails.forEach((thumbnail) => {
-          thumbnail.addEventListener("click", openLightbox);
+        screenshotCards.forEach((card) => {
+          card.addEventListener("click", openLightbox);
         });
 
-        closeButton.addEventListener("click", (event) => {
-          event.stopPropagation();
+        lightboxClose.addEventListener("click", (e) => {
+          e.stopPropagation();
           closeLightbox();
         });
 
-        lightbox.addEventListener("click", (event) => {
-          if (event.target === lightbox) {
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) {
             closeLightbox();
           }
         });
 
-        document.addEventListener("keydown", (event) => {
-          if (
-            event.key === "Escape" &&
-            lightbox.classList.contains("visible")
-          ) {
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && lightbox.classList.contains("visible")) {
             closeLightbox();
           }
+        });
+
+        // Touch events for mobile
+        lightbox.addEventListener("touchstart", (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+
+        // Subtle parallax effect on cards
+        const featureCards = document.querySelectorAll(".feature-card");
+
+        featureCards.forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const deltaX = (x - centerX) / centerX;
+            const deltaY = (y - centerY) / centerY;
+
+            card.style.transform = `perspective(1000px) rotateY(${
+              deltaX * 5
+            }deg) rotateX(${-deltaY * 5}deg) translateZ(10px)`;
+          });
+
+          card.addEventListener("mouseleave", () => {
+            card.style.transform = "";
+            setTimeout(() => {
+              card.style.transition = "";
+            }, 300);
+          });
         });
       });
     </script>
