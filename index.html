@@ -18,32 +18,23 @@
 
     <style>
       :root {
-        /* Modern color palette */
         --bg-dark: #0e0e12;
         --bg-surface: #15151b;
         --bg-surface-hover: #1c1c25;
         --bg-card: #1e1e28;
         --bg-card-hover: #232330;
-
-        /* Accent colors */
         --accent-blue: #5e8fde;
         --accent-blue-light: #8ab4f8;
         --accent-purple: #a58efa;
         --accent-green: #34a853;
         --accent-teal: #60cccb;
-
-        /* Text colors */
         --text-primary: #ffffff;
         --text-secondary: #b0b7c3;
         --text-tertiary: #8a8f98;
-
-        /* Elevations */
         --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.2);
         --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.25);
         --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.3);
         --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.4);
-
-        /* Borders */
         --border-subtle: rgba(255, 255, 255, 0.08);
       }
 
@@ -62,7 +53,6 @@
         overflow-x: hidden;
       }
 
-      /* Decorative background elements */
       .bg-glow {
         position: fixed;
         pointer-events: none;
@@ -117,7 +107,6 @@
         padding: 0 1.5rem;
       }
 
-      /* Floating header with glassmorphism effect */
       .header-wrapper {
         position: sticky;
         top: 0;
@@ -170,14 +159,13 @@
         max-width: 600px;
       }
 
-      /* Hero section with floating UI mockup - FIXED */
       .hero {
         position: relative;
-        margin: 4rem 0 8rem; /* Increased bottom margin to prevent overlap */
+        margin: 4rem 0 8rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-height: 600px; /* Ensure enough space */
+        min-height: 600px;
       }
 
       .hero-content {
@@ -211,84 +199,67 @@
         position: relative;
         width: 100%;
         max-width: 900px;
-        height: auto; /* Let height adjust automatically */
-        margin-bottom: 40px; /* Extra space at bottom */
-        padding-bottom: 60px; /* Additional padding to prevent overlap */
+        height: 500px; /* Example fixed height, adjust as needed */
+        margin-bottom: 40px;
+        padding-bottom: 60px;
         overflow: visible;
       }
 
-      .hero-ui-main {
+      /* Base styles for all hero images */
+      .hero-img {
         position: absolute;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-md);
+        cursor: pointer;
+        /* Fast transitions, slight delay for z-index if needed */
+        transition: transform 0.25s ease-out, filter 0.25s ease-out,
+          z-index 0s linear 0.1s;
+        height: auto;
+      }
+
+      /* Positional styles */
+      .hero-pos-main {
+        width: 70%;
         top: 0;
         left: 50%;
-        transform: translateX(-50%);
-        width: 70%;
-        height: auto;
-        border-radius: 1rem;
-        box-shadow: var(--shadow-xl);
-        z-index: 2;
-        transition: all 0.2s ease;
-        cursor: pointer;
+        transform: translateX(-50%) scale(1);
       }
 
-      .hero-ui-main:hover {
-        transform: translateX(-50%) translateY(-5px);
+      .hero-pos-left {
+        width: 45%;
+        top: 15%;
+        left: 0%;
+        transform: rotate(-8deg) scale(0.85);
       }
 
-      .hero-ui-floating {
-        position: absolute;
-        width: 40%;
-        height: auto;
-        border-radius: 0.75rem;
-        box-shadow: var(--shadow-lg);
-        opacity: 0.5;
-        z-index: 1;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-
-      .hero-ui-left {
-        left: 5%;
+      .hero-pos-right {
+        width: 45%;
         top: 20%;
-        transform: rotate(-5deg);
+        right: 0%;
+        left: auto;
+        transform: rotate(8deg) scale(0.85);
       }
 
-      .hero-ui-left:hover {
-        transform: rotate(-3deg) translateY(-5px);
+      /* Layer styles (controlled by JS) */
+      .hero-layer-front {
+        z-index: 3;
+        filter: blur(0px);
+        box-shadow: var(--shadow-xl);
       }
-
-      .hero-ui-right {
-        right: 5%;
-        top: 25%;
-        transform: rotate(5deg);
+      .hero-layer-middle {
+        z-index: 2;
+        filter: blur(2px);
+        box-shadow: var(--shadow-lg);
       }
-
-      .hero-ui-right:hover {
-        transform: rotate(3deg) translateY(-5px);
-      }
-
-      /* Modified activation for hero images - blur instead of opacity */
-      .hero-ui-floating.active,
-      .hero-ui-main.active {
-        z-index: 10; /* Bring to front */
-        box-shadow: var(--shadow-xl); /* Enhanced shadow */
-        transition: all 0.2s ease;
-        filter: blur(0); /* No blur for active image */
-        opacity: 1 !important;
-      }
-
-      .hero-ui-floating.inactive,
-      .hero-ui-main.inactive {
+      .hero-layer-back {
         z-index: 1;
-        filter: blur(3px); /* Blur instead of opacity */
-        opacity: 1; /* Keep full visibility */
-        transition: all 0.2s ease;
+        filter: blur(4px);
+        box-shadow: var(--shadow-md);
       }
 
-      /* Features section with card hover effects */
       .features {
         padding: 3rem 0 5rem;
-        margin-top: 2rem; /* Additional spacing from hero section */
+        margin-top: 2rem;
       }
 
       .section-title {
@@ -419,7 +390,6 @@
         margin-top: auto;
       }
 
-      /* Screenshots gallery with parallax effect */
       .screenshots {
         padding: 3rem 0 6rem;
         position: relative;
@@ -427,8 +397,8 @@
 
       .screenshots-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
         margin-top: 3.5rem;
         perspective: 1000px;
       }
@@ -440,17 +410,32 @@
         box-shadow: var(--shadow-md);
         transform-style: preserve-3d;
         transition: all 0.4s ease;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-card);
+        aspect-ratio: 16/10;
+        height: 100%;
+        cursor: pointer;
       }
 
       .screenshot-card:hover {
         transform: translateZ(20px) rotateX(5deg);
         box-shadow: var(--shadow-xl);
+        border-color: rgba(94, 143, 222, 0.3);
+      }
+
+      .screenshot-img-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
       }
 
       .screenshot-img {
         width: 100%;
-        height: auto;
-        border-radius: 12px;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 10px;
         transform: scale(1);
         transition: transform 0.5s ease;
         display: block;
@@ -460,22 +445,26 @@
         transform: scale(1.05);
       }
 
+      .screenshot-card.center-preview .screenshot-img {
+        object-position: center; /* Überschreibt das standardmäßige 'center top' */
+      }
+
       .screenshot-overlay {
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        padding: 1rem;
         background: linear-gradient(
           to top,
-          rgba(0, 0, 0, 0.7) 0%,
-          rgba(0, 0, 0, 0) 60%
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0) 100%
         );
         opacity: 0;
         transition: opacity 0.3s ease;
         display: flex;
         align-items: flex-end;
-        padding: 1.5rem;
       }
 
       .screenshot-card:hover .screenshot-overlay {
@@ -486,9 +475,12 @@
         color: white;
         font-size: 1rem;
         font-weight: 500;
+        padding: 0.5rem 0;
+        display: block;
+        width: 100%;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
       }
 
-      /* CTA section with floating motion */
       .cta {
         margin: 3rem 0 6rem;
         position: relative;
@@ -549,23 +541,6 @@
         margin-bottom: 2.5rem;
       }
 
-      .floating {
-        animation: floating 5s ease-in-out infinite;
-      }
-
-      @keyframes floating {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-15px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
-      }
-
-      /* Button styling */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -622,7 +597,6 @@
         border-radius: 16px;
       }
 
-      /* Privacy badge with glow effect */
       .privacy {
         padding: 3rem 0;
         text-align: center;
@@ -655,7 +629,6 @@
         font-size: 1.3rem;
       }
 
-      /* Footer styling */
       footer {
         padding: 4rem 0 2rem;
         text-align: center;
@@ -665,7 +638,6 @@
         margin-top: 2rem;
       }
 
-      /* Lightbox styling */
       .lightbox {
         position: fixed;
         top: 0;
@@ -691,12 +663,11 @@
       }
 
       .lightbox-img {
-        max-width: 95%;
-        max-height: 95%;
+        max-width: 90%;
+        max-height: 90%;
         border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: var(--shadow-xl);
-        transform: scale(0.9);
-        transition: transform 0.3s ease;
         object-fit: contain;
       }
 
@@ -739,16 +710,13 @@
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       }
 
-      /* Responsive design */
       @media (max-width: 1024px) {
         .hero-title {
           font-size: 3rem;
         }
-
         .hero {
-          margin-bottom: 7rem; /* Adjusted spacing for tablets */
+          margin-bottom: 7rem;
         }
-
         .section-title {
           font-size: 1.8rem;
         }
@@ -758,23 +726,33 @@
         .hero-title {
           font-size: 2.5rem;
         }
-
         .hero-subtitle {
           font-size: 1.2rem;
         }
-
         .hero {
-          margin-bottom: 6rem; /* Adjusted for mobile */
-          min-height: 500px;
+          margin-bottom: 6rem;
+          min-height: 450px;
+          height: auto;
         }
-
-        .hero-ui-floating {
-          display: none; /* Hide side images on mobile */
+        .hero-img.hero-pos-left,
+        .hero-img.hero-pos-right {
+          display: none;
         }
-
-        .hero-ui-main {
-          width: 85%; /* Wider main image on mobile */
-          margin-bottom: 40px; /* Extra space for main image */
+        .hero-img.hero-pos-main {
+          /* width: 85%;
+          position: relative; */
+          transform: translateX(-50%);
+          margin: 0 auto 40px auto;
+          left: 50%;
+          top: auto;
+          filter: blur(0px) !important;
+          z-index: 10 !important;
+        }
+        .hero-ui {
+          height: auto;
+          padding-bottom: 0;
+          display: flex;
+          justify-content: center;
         }
 
         .cta-title {
@@ -786,37 +764,29 @@
         header h1 {
           font-size: 2rem;
         }
-
         header p {
           font-size: 1rem;
         }
-
         .hero-title {
           font-size: 2rem;
         }
-
         .hero-subtitle {
           font-size: 1rem;
         }
-
         .hero {
-          margin-bottom: 5rem; /* Minimal spacing on small mobile */
+          margin-bottom: 5rem;
           min-height: 350px;
         }
-
         .section-title {
           font-size: 1.5rem;
         }
-
         .btn-large {
           padding: 0.75rem 1.5rem;
           font-size: 1rem;
         }
-
         .cta-title {
           font-size: 1.8rem;
         }
-
         .cta-text {
           font-size: 1rem;
         }
@@ -850,7 +820,7 @@
           <a
             href="https://chromewebstore.google.com/detail/tab-organizer/mlgdgflookmmhlddkokaheadldccngja"
             target="_blank"
-            class="btn btn-primary btn-large floating"
+            class="btn btn-primary btn-large"
           >
             Install Now
           </a>
@@ -860,17 +830,20 @@
           <img
             src="assets/to-main-views.png"
             alt="Tab Organizer main interface"
-            class="hero-ui-main"
+            class="hero-img hero-pos-main hero-layer-front"
+            id="hero-img-1"
           />
           <img
             src="assets/to-duplicates.png"
             alt="Tab Organizer duplicate detection"
-            class="hero-ui-floating hero-ui-left"
+            class="hero-img hero-pos-left hero-layer-middle"
+            id="hero-img-2"
           />
           <img
             src="assets/to-save-session.png"
             alt="Tab Organizer save session feature"
-            class="hero-ui-floating hero-ui-right"
+            class="hero-img hero-pos-right hero-layer-back"
+            id="hero-img-3"
           />
         </div>
       </section>
@@ -891,8 +864,9 @@
             <div class="feature-icon">✓</div>
             <h3 class="feature-title">Powerful Session Management</h3>
             <p class="feature-desc">
-              Save and restore tab sessions with a single click, perfect for
-              switching between different projects or workflows.
+              Save and restore tab sessions with a single click. Supports
+              multiple displays and browser windows for seamless project
+              switching.
             </p>
           </div>
 
@@ -938,90 +912,119 @@
         <h2 class="section-title">🖼️ <span>Screenshots</span></h2>
         <div class="screenshots-grid">
           <div class="screenshot-card">
-            <img
-              src="assets/to-extension.png"
-              alt="Tab Organizer extension main interface"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-extension.png"
+                alt="Tab Organizer extension main interface"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Main Extension Interface</span>
             </div>
           </div>
 
           <div class="screenshot-card">
-            <img
-              src="assets/to-active-sync.png"
-              alt="Tab Organizer active sync status indicator"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-active-sync.png"
+                alt="Tab Organizer active sync status indicator"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Active Sync Status</span>
             </div>
           </div>
 
           <div class="screenshot-card">
-            <img
-              src="assets/to-duplicates.png"
-              alt="Tab Organizer duplicate tab identification"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-duplicates.png"
+                alt="Tab Organizer duplicate tab identification"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Duplicate Tab Detection</span>
             </div>
           </div>
 
           <div class="screenshot-card">
-            <img
-              src="assets/to-main-buttons.png"
-              alt="Tab Organizer main action buttons panel"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-main-buttons.png"
+                alt="Tab Organizer main action buttons panel"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Main Action Buttons</span>
             </div>
           </div>
 
           <div class="screenshot-card">
-            <img
-              src="assets/to-move-to-window.png"
-              alt="Tab Organizer move selected tabs to new window option"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-move-to-window.png"
+                alt="Tab Organizer move selected tabs to new window option"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Move to New Window</span>
             </div>
           </div>
 
-          <div class="screenshot-card">
-            <img
-              src="assets/to-load-session.png"
-              alt="Tab Organizer load saved session selection"
-              class="screenshot-img"
-            />
+          <div class="screenshot-card center-preview">
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-load-session.png"
+                alt="Tab Organizer load saved session selection"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Load Saved Sessions</span>
             </div>
           </div>
 
-          <div class="screenshot-card">
-            <img
-              src="assets/to-save-session.png"
-              alt="Tab Organizer save current session dialog"
-              class="screenshot-img"
-            />
+          <div class="screenshot-card center-preview">
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-save-session.png"
+                alt="Tab Organizer save current session dialog"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Save Current Session</span>
             </div>
           </div>
 
           <div class="screenshot-card">
-            <img
-              src="assets/to-stats.png"
-              alt="Tab Organizer tab usage statistics view"
-              class="screenshot-img"
-            />
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-stats.png"
+                alt="Tab Organizer tab usage statistics view"
+                class="screenshot-img"
+              />
+            </div>
             <div class="screenshot-overlay">
               <span class="screenshot-title">Tab Usage Statistics</span>
+            </div>
+          </div>
+
+          <div class="screenshot-card">
+            <div class="screenshot-img-container">
+              <img
+                src="assets/to-multi-lang-support.png"
+                alt="Tab Organizer select a your language"
+                class="screenshot-img"
+              />
+            </div>
+            <div class="screenshot-overlay">
+              <span class="screenshot-title">Language Support</span>
             </div>
           </div>
         </div>
@@ -1066,54 +1069,70 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Hero UI image interaction - simplified
-        const heroImages = document.querySelectorAll(
-          ".hero-ui-main, .hero-ui-floating"
-        );
+        // --- Hero Image Layer Targeted Swap ---
+        const img1 = document.getElementById("hero-img-1");
+        const img2 = document.getElementById("hero-img-2");
+        const img3 = document.getElementById("hero-img-3");
+        const allImgs = [img1, img2, img3]; // Keep track of all images
 
-        heroImages.forEach((img) => {
+        const clsFront = "hero-layer-front";
+        const clsMiddle = "hero-layer-middle";
+        const clsBack = "hero-layer-back";
+        const layerClasses = [clsFront, clsMiddle, clsBack];
+
+        // Helper to find the element with a specific layer class
+        const getElementByLayer = (layerClass) =>
+          allImgs.find((el) => el.classList.contains(layerClass));
+
+        // Function to set the layers for the three elements
+        function setLayers(frontEl, middleEl, backEl) {
+          allImgs.forEach((img) => img.classList.remove(...layerClasses)); // Clean slate
+          if (frontEl) frontEl.classList.add(clsFront);
+          if (middleEl) middleEl.classList.add(clsMiddle);
+          if (backEl) backEl.classList.add(clsBack);
+        }
+
+        allImgs.forEach((img) => {
           img.addEventListener("click", () => {
-            // Simple toggle active state
-            heroImages.forEach((i) => {
-              if (i === img) {
-                i.classList.add("active");
-                i.classList.remove("inactive");
-              } else {
-                i.classList.add("inactive");
-                i.classList.remove("active");
-              }
-            });
+            const clickedImg = img;
+
+            // If front image is clicked, do nothing
+            if (clickedImg.classList.contains(clsFront)) {
+              return;
+            }
+
+            const currentFront = getElementByLayer(clsFront);
+            let newMiddle = null;
+            let newBack = null;
+
+            // Determine the new middle and back elements
+            // The old front always becomes the new middle
+            newMiddle = currentFront;
+
+            // Find the element that wasn't clicked and wasn't the front element
+            const otherEl = allImgs.find(
+              (el) => el !== clickedImg && el !== currentFront
+            );
+            newBack = otherEl; // This element stays/becomes back
+
+            // Set the new layers
+            setLayers(clickedImg, newMiddle, newBack);
           });
         });
+        // --- End Hero Image Layer Targeted Swap ---
 
-        // Click outside to reset hero images
-        document.addEventListener("click", (e) => {
-          if (
-            !e.target.closest(".hero-ui-main") &&
-            !e.target.closest(".hero-ui-floating")
-          ) {
-            if (
-              document.querySelector(".hero-ui-main.active") ||
-              document.querySelector(".hero-ui-floating.active")
-            ) {
-              heroImages.forEach((i) => {
-                i.classList.remove("active");
-                i.classList.remove("inactive");
-              });
-            }
-          }
-        });
-
-        // Enhanced Lightbox functionality for screenshots
+        // --- Lightbox Functionality ---
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
         const lightboxClose = document.getElementById("lightbox-close");
         const screenshotCards = document.querySelectorAll(".screenshot-card");
 
-        // Add caption element to lightbox
-        const lightboxCaption = document.createElement("div");
-        lightboxCaption.className = "lightbox-caption";
-        lightbox.appendChild(lightboxCaption);
+        let lightboxCaption = document.querySelector(".lightbox-caption");
+        if (!lightboxCaption) {
+          lightboxCaption = document.createElement("div");
+          lightboxCaption.className = "lightbox-caption";
+          lightbox.appendChild(lightboxCaption);
+        }
 
         function openLightbox(e) {
           const card = e.currentTarget;
@@ -1132,7 +1151,7 @@
           setTimeout(() => {
             lightboxImg.src = "";
             lightboxCaption.textContent = "";
-          }, 300);
+          }, 300); // Match transition duration
           document.body.style.overflow = "auto";
         }
 
@@ -1157,39 +1176,10 @@
           }
         });
 
-        // Touch events for mobile
         lightbox.addEventListener("touchstart", (e) => {
           if (e.target === lightbox) {
             closeLightbox();
           }
-        });
-
-        // Subtle parallax effect on cards
-        const featureCards = document.querySelectorAll(".feature-card");
-
-        featureCards.forEach((card) => {
-          card.addEventListener("mousemove", (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const deltaX = (x - centerX) / centerX;
-            const deltaY = (y - centerY) / centerY;
-
-            card.style.transform = `perspective(1000px) rotateY(${
-              deltaX * 5
-            }deg) rotateX(${-deltaY * 5}deg) translateZ(10px)`;
-          });
-
-          card.addEventListener("mouseleave", () => {
-            card.style.transform = "";
-            setTimeout(() => {
-              card.style.transition = "";
-            }, 300);
-          });
         });
       });
     </script>
